@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello page</title>
+</head>
+<body>
+<div th:align="right" th:replace="~{header :: logout}"></div>
+<div>
+    <th:block th:each="msg : ${messages}">
+        <h1 th:text="${msg}"></h1>
+    </th:block>
+</div>
+<br/>
+<br/>
+<br/>
+<a href="/user">You page</a>
+</body>
+</html>

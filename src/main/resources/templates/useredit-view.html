@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.id} == null ? 'Добавить' : 'Редактировать'">Title</title>
+</head>
+<body>
+<div th:replace="~{header :: logout}"></div>
+<form th:action="${user.id} == null ? @{/admin/add} : @{/admin/edit}" th:method="POST" th:object="${user}">
+    <fieldset>
+
+        <legend th:text="${user.id} == null ? 'Добавление пользователя' : 'Редактирование пользователя'">Пользователь
+        </legend>
+        <input type="hidden" name="id" th:value="${user.id}">
+        <label for="username">Имя: </label>
+        <input type="text" name="username" id="username" th:value="${user.username}" required/>
+        <br/>
+        <br/>
+        <label for="password">Пароль : </label>
+        <input type="password" name="password" id="password" th:value="${user.password}" required/>
+        <br/>
+        <br/>
+        <label for="pseudonym">Псевдоним</label>
+        <input type="text" name="pseudonym" id="pseudonym" th:value="${user.pseudonym}">
+        <br/>
+        <br/>
+        <label for="phoneNumber">Телефон</label>
+        <input type="tel" name="phoneNumber" id="phoneNumber" th:value="${user.phoneNumber}">
+        <br/>
+        <br/>
+        <label for="flatNum">Квартира</label>
+        <input type="text" name="flatNum" id="flatNum" th:value="${user.flatNum}">
+        <br/>
+        <br/>
+        <label for="numCount">Количество счетчиков</label>
+        <input type="text" name="numCount" id="numCount" th:value="${user.numCount}">
+        <br/>
+        <br/>
+        <div>
+            <label>Роли :</label>
+            <div align="left">
+                <th:block th:each = "role : ${rolesList}">
+                    <div>
+                        <input type="checkbox" th:field = "*{roles}" th:text="${role.rolename}" th:value="${role.id}"/>
+                    </div>
+                </th:block>
+            </div>
+<!--            <input type="text" name="roles" id="roles" th:value="${user.roles}">-->
+
+        </div>
+        <br/>
+        <br/>
+        <label for="enabled">Действует</label>
+        <input type="text" name="enabled" id="enabled" th:value="${user.enabled}">
+        <br/>
+        <br/>
+        <input type="submit" th:value="${user.id} == null ? 'Добавить пользователя' : 'Сохранить изменения'">
+    </fieldset>
+</form>
+</body>
+</html>

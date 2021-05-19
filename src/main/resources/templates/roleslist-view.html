@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Roles list</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{header :: logout}"/>
+<div>
+    <h3>Центр управления ролями</h3>
+
+    <table>
+        <tr>
+            <th width="5%">id</th>
+            <th width="10%">Роль</th>
+            <th width="10%">Изменить/Удалить</th>
+        </tr>
+
+        <tr th:each="role : ${roleslist}">
+            <td th:text="${role.id}"></td>
+            <td >
+                <a th:href="@{'/roles/'+${role.id}}" th:text="${role.rolename}">Role name</a>
+            </td>
+            <td>
+                <a th:href="@{'/admin/roles/edit/'+${role.id}}">edit</a>
+                <a th:href="@{'/admin/roles/delete/'+${role.id}}">delete</a>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <br/>
+    <a href="/admin/roles/add">Добавить новую роль</a>
+</div>
+</body>
+</html>
