@@ -1,4 +1,4 @@
-package web.spring_boot_security.config.handler;
+package web.spring_boot_security_bootstrap.config.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
