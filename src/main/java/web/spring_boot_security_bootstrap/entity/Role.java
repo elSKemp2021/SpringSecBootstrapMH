@@ -1,4 +1,4 @@
-package web.spring_boot_security.entity;
+package web.spring_boot_security_bootstrap.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -23,8 +23,7 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public Role(Long id, String rolename) {
-        this.id = id;
+    public Role(String rolename) {
         this.rolename = rolename;
     }
 
@@ -59,6 +58,8 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return getRolename();
+        StringBuilder result = new StringBuilder(getRolename());
+        int startIndex = result.indexOf("_") + 1;
+        return result.substring(startIndex);
     }
 }

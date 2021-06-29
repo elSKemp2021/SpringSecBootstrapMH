@@ -1,4 +1,4 @@
-package web.spring_boot_security.config;
+package web.spring_boot_security_bootstrap.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,8 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import web.spring_boot_security.config.handler.LoginSuccessHandler;
-import web.spring_boot_security.service.UserService;
+import web.spring_boot_security_bootstrap.config.handler.LoginSuccessHandler;
+import web.spring_boot_security_bootstrap.service.UserService;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,6 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+//        auth.inMemoryAuthentication()
+//                .withUser("admin@a.com")
+//                .password("admin")
+//                .authorities("ROLE_ADMIN");
     }
 
     @Override

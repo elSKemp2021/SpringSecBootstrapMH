@@ -1,4 +1,4 @@
-package web.spring_boot_security.entity;
+package web.spring_boot_security_bootstrap.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -13,15 +14,31 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
-    private String pseudonym;
-    private String phoneNumber;
-    private Integer flatNum;
-    private Integer numCount;
+    private String nameFirst;
+    private String nameLast;
+    private String email;
+    private Integer age;
     private String password;
+    @Transient
+    private String passwordConfirm;
     private Integer enabled;
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    public User() {
+    }
+
+    public User(String nameFirst, String nameLast, String email, Integer age, String password, Set<Role> roles) {
+        this.nameFirst = nameFirst;
+        this.nameLast = nameLast;
+        this.email = email;
+        this.age = age;
+        this.password = password;
+        this.roles = roles;
+
+        //Set enabled = 1 for enable login user
+        this.enabled = 1;
+    }
 
     public Long getId() {
         return id;
@@ -31,50 +48,54 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
+    public String getNameFirst() {
+        return nameFirst;
     }
 
-    public void setUsername(String userName) {
-        this.username = userName;
+    public void setNameFirst(String nameFirst) {
+        this.nameFirst = nameFirst;
     }
 
-    public String getPseudonym() {
-        return pseudonym;
+    public String getNameLast() {
+        return nameLast;
     }
 
-    public void setPseudonym(String pseudonym) {
-        this.pseudonym = pseudonym;
+    public void setNameLast(String nameLast) {
+        this.nameLast = nameLast;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Integer getFlatNum() {
-        return flatNum;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setFlatNum(Integer flatNum) {
-        this.flatNum = flatNum;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
-    public Integer getNumCount() {
-        return numCount;
+    public String getPasswordConfirm() {
+        return passwordConfirm;
     }
 
-    public void setNumCount(Integer numCount) {
-        this.numCount = numCount;
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     public void setPassword(String password) {
@@ -110,6 +131,17 @@ public class User implements UserDetails {
         this.roles.remove(role);
     }
 
+    public String rolesToString() {
+        return getRoles().stream()
+                .map(Role::toString)
+                .sorted()
+                .collect(Collectors.joining(" "));
+    }
+
+    public boolean isAdmin() {
+        return rolesToString().contains("ADMIN");
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
@@ -137,18 +169,16 @@ public class User implements UserDetails {
 
         User user = (User) o;
 
-        if (!username.equals(user.username)) return false;
-        if (pseudonym != null ? !pseudonym.equals(user.pseudonym) : user.pseudonym != null) return false;
-        if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
-        return flatNum != null ? flatNum.equals(user.flatNum) : user.flatNum == null;
+        if (!nameFirst.equals(user.nameFirst)) return false;
+        if (!nameLast.equals(user.nameLast)) return false;
+        return email.equals(user.email);
     }
 
     @Override
     public int hashCode() {
-        int result = username.hashCode();
-        result = 31 * result + (pseudonym != null ? pseudonym.hashCode() : 0);
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        result = 31 * result + (flatNum != null ? flatNum.hashCode() : 0);
+        int result = nameFirst.hashCode();
+        result = 31 * result + nameLast.hashCode();
+        result = 31 * result + email.hashCode();
         return result;
     }
 
@@ -156,12 +186,12 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", pseudonym='" + pseudonym + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", flatNum=" + flatNum +
-                ", numCount=" + numCount +
+                ", nameFirst='" + nameFirst + '\'' +
+                ", nameLast='" + nameLast + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
                 ", password='" + password + '\'' +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", enabled=" + enabled +
                 ", roles=" + roles +
                 '}';

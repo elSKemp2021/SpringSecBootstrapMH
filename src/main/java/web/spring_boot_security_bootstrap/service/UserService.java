@@ -1,8 +1,8 @@
-package web.spring_boot_security.service;
+package web.spring_boot_security_bootstrap.service;
 
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import web.spring_boot_security.entity.User;
+import web.spring_boot_security_bootstrap.entity.User;
 
 import java.util.List;
 
@@ -17,5 +17,5 @@ public interface UserService extends UserDetailsService {
 
     User getUserById(long id);
 
-    User getUserByUsername(String username);
+    User getUserByEmail(String email);
 }

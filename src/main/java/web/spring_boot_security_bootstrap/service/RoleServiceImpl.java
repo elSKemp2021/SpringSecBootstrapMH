@@ -1,9 +1,9 @@
-package web.spring_boot_security.service;
+package web.spring_boot_security_bootstrap.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import web.spring_boot_security.entity.Role;
-import web.spring_boot_security.repository.RoleRepository;
+import web.spring_boot_security_bootstrap.entity.Role;
+import web.spring_boot_security_bootstrap.repository.RoleRepository;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package web.spring_boot_security.repository;
+package web.spring_boot_security_bootstrap.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import web.spring_boot_security.entity.User;
+import web.spring_boot_security_bootstrap.entity.User;
 
 
 public interface UserRepository extends JpaRepository<User, Long>{
     User findUserById(long id);
-    User findUserByUsername(String username);
+    User findUserByEmail(String email);
 }

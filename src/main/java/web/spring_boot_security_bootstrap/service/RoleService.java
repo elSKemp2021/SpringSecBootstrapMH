@@ -1,6 +1,6 @@
-package web.spring_boot_security.service;
+package web.spring_boot_security_bootstrap.service;
 
-import web.spring_boot_security.entity.Role;
+import web.spring_boot_security_bootstrap.entity.Role;
 
 import java.util.List;
 

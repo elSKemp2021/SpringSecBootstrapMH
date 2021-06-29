@@ -1,12 +1,12 @@
-package web.spring_boot_security.service;
+package web.spring_boot_security_bootstrap.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import web.spring_boot_security.entity.User;
-import web.spring_boot_security.repository.RoleRepository;
-import web.spring_boot_security.repository.UserRepository;
+import web.spring_boot_security_bootstrap.entity.User;
+import web.spring_boot_security_bootstrap.repository.RoleRepository;
+import web.spring_boot_security_bootstrap.repository.UserRepository;
 
 import java.util.List;
 
@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
+    public User getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = getUserByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = getUserByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
